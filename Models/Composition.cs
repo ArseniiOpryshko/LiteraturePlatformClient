@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LiteraturePlatform.Models
+namespace LiteraturePlatformClient.Models
 {
     public class Composition
     {
         public int CompositionId { get; set; }
-        public string Name { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
         public int GenreId { get; set; }
         public Genre Genre { get; set; }
         public DateTime Date { get; set; }

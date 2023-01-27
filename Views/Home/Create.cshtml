@@ -1,0 +1,39 @@
+﻿@model Composition
+
+<link href="~/css/create.css" rel="stylesheet" />
+<div class="frame7710-frame7710">
+    <div class="mainblock">
+        <h2>Add composition</h2>
+        <div>
+            <form enctype="multipart/form-data" method="post" asp-action="Create">
+                <div>
+                    <label for="Title">Title</label>
+                    <input type="text" asp-for="Title" minlength="5" maxlength="20" required>
+                </div>
+                <div>
+                    <label for="Description">Description</label>
+                    <input type="text" asp-for="Description" required minlength="13" maxlength="50">
+                </div>
+                <div>
+                    <label for="Cover">Image</label>
+                    <input type="file" name="files" class="cover" accept="image/*">
+                </div>
+                <div>
+                    <label for="Name">Genre</label>
+                    <select name="Genre" class="genre">
+                        @foreach (var item in ViewBag.Genres)
+                        {
+                            <option selected value="@item.GenreId">@item.Name</option>
+                        }
+
+                    </select>
+                </div>
+                <div>
+                    <label for="Text">Text</label>
+                    <input type="file" name="files" class="cover" accept=".txt">
+                </div>
+                <input class="mbtn" type="submit" value="Add">
+            </form>
+        </div>
+    </div>
+</div>

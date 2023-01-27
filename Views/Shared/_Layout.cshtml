@@ -4,46 +4,59 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - LiteraturePlatformClient</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/LiteraturePlatformClient.styles.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LiteraturePlatformClient</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+    <div class="blog-home-blog-home">
+    <div class="blog-home-topheader">
+        <div class="innerheaderflex">
+            <div class="blog-home-locofyguielogo">
+                <a href="index.html">
+                    <img src="~/images/logo.png"
+                         alt="image365042"
+                         class="blog-home-image36" />
+                </a>
+            </div>
+            <div class="blog-home-headerlinks">
+                <div class="blog-home-tryforfree">
+                    <div class="blog-home-frame774">
+                        <a href="Login.html"><span class="blog-home-text02">Sign up</span></a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <div class="select">
+                        <span class="selected">Your name</span>
+                        <div class="caret"></div>
+                    </div>
+                    <ul class="menu">
+                        <a asp-action="Account">
+                            <li class="active">Account</li>
+                        </a>
+                        <a asp-action="Create" asp-controller="Home">
+                            <li>Add composition</li>
+                        </a>
+                        <li>Log out</li>
                     </ul>
                 </div>
             </div>
-        </nav>
-    </header>
+        </div>
+    </div>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - LiteraturePlatformClient - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <div class="footer">
+        <span class="blog-home-text62">
+            <span>© 2022, Literature Platform. All Rights Reserved.</span>
+        </span>
+        <img src="~/images/logo.png" alt="madewithlocofyimage9830" class="blog-home-madewithlocofyimage" />
+    </div>
+    </div>
+    <script src="~/js/dropdown-menu-code.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

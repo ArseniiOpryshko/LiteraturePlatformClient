@@ -1,4 +1,4 @@
-﻿namespace LiteraturePlatform.Models
+﻿namespace LiteraturePlatformClient.Models
 {
     public class Genre
     {
