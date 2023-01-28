@@ -19,6 +19,12 @@ namespace LiteraturePlatformClient.Controllers
             ViewBag.Compositions = await GetAll();
             ViewBag.Top1 = await GetTop1Raiting();
 
+            if (User.Claims.FirstOrDefault(x => x.Type.ToString() == "Id") != null)
+            {
+                ViewBag.Login = User.Claims.FirstOrDefault(x => x.Type.ToString() == "Login").Value;
+                //User.Claims.FirstOrDefault(x => x.Type.ToString() == "Id").Value
+            }
+
             return View();
         }
 

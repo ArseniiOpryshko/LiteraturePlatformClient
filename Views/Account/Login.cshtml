@@ -1,0 +1,23 @@
+﻿@page
+
+<div class="inputblock">
+    <div class="innerblock">
+        <div class="inputgroup">
+            <form method="post" asp-action="Login">
+                <span class="ttt">Sign into platform</span>
+                <div>
+                    <label for="Email">Email</label>
+                    <input type="text" name="Email" id="email" required>
+                </div>
+                <div>
+                    <label for="Password">Password</label>
+                    <input type="password" name="Password" id="password" required>
+                </div>
+                <input class="mbtn" type="submit" value="Log in">
+                <span>No account? <a asp-action="Register">Sign up here</a></span>
+            </form>
+            
+        </div>
+        <img src="~/images/books.jpg" alt="">
+    </div>
+</div>

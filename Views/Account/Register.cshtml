@@ -1,29 +1,36 @@
-﻿@page
+﻿@model LiteraturePlatformClient.Models.RegisterModel
+
 
 
 <div class="inputblock">
     <div class="innerblock">
         <div class="inputgroupreg">
-            <span class="ttt">Registration</span>
-            <div>
-                <label for="Login">Login</label>
-                <input type="text" name="Login" id="password">
-            </div>
-            <div>
-                <label for="Email">Email</label>
-                <input type="text" name="Email" id="email">
-            </div>
-            <div>
-                <label for="Password">Password</label>
-                <input type="password" name="Password" id="email">
-            </div>
-            <div>
-                <label for="CPassword">Confirm Password</label>
-                <input type="password" name="CPassword" id="email">
-            </div>
-            <input class="mbtn" type="submit" value="Register">
+            <form method="post" asp-action="Register">
+                <span class="ttt">Registration</span>
+                <div>
+                    <label asp-for="Login">Login</label>
+                    <input type="text" asp-for="Login" id="password" required>
+                    <span style="color: red" asp-validation-for="Login"></span>
+                </div>
+                <div>
+                    <label asp-for="Email">Email</label>
+                    <input type="text" asp-for="Email" id="email" required>
+                    <span style="color: red" asp-validation-for="Email"></span>
+                </div>
+                <div>
+                    <label asp-for="Password">Password</label>
+                    <input type="password" asp-for="Password" id="email" required>
+                    <span style="color: red" asp-validation-for="Password"></span>
+                </div>
+                <div>
+                    <label asp-for="ConfirmPassword">Confirm Password</label>
+                    <input type="password" asp-for="ConfirmPassword" id="email" required>
+                    <span style="color: red" asp-validation-for="ConfirmPassword"></span>
+                </div>
+                <input class="mbtn" type="submit" value="Register">
+            </form>
         </div>
-        <img src="books.jpg" alt="">
+        <img src="~/images/books.jpg" alt="">
     </div>
 </div>
 

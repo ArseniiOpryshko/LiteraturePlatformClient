@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - LiteraturePlatformClient</title>
 
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/login.css">
 </head>
 <body>
     <div class="blog-home-blog-home">
@@ -21,7 +22,7 @@
             <div class="blog-home-headerlinks">
                 <div class="blog-home-tryforfree">
                     <div class="blog-home-frame774">
-                        <a href="Login.html"><span class="blog-home-text02">Sign up</span></a>
+                        <a asp-action="Login" asp-controller="Account" ><span class="blog-home-text02">Sign up</span></a>
                     </div>
                 </div>
 
