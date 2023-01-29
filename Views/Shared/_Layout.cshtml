@@ -13,22 +13,30 @@
     <div class="blog-home-topheader">
         <div class="innerheaderflex">
             <div class="blog-home-locofyguielogo">
-                <a href="index.html">
+                <a asp-action="Index" asp-controller="Home">
                     <img src="~/images/logo.png"
                          alt="image365042"
                          class="blog-home-image36" />
                 </a>
-            </div>
+            </div>  
             <div class="blog-home-headerlinks">
                 <div class="blog-home-tryforfree">
-                    <div class="blog-home-frame774">
-                        <a asp-action="Login" asp-controller="Account" ><span class="blog-home-text02">Sign up</span></a>
-                    </div>
+                    @if(ViewBag.Login == null){
+                        <div class="blog-home-frame774">
+                            <a asp-action="Login" asp-controller="Account" ><span class="blog-home-text02">Sign up</span></a>
+                        </div>
+                    }
+                    
                 </div>
 
                 <div class="dropdown">
                     <div class="select">
-                        <span class="selected">Your name</span>
+                        @if(ViewBag.Login != null){
+                            <span class="selected">@ViewBag.Login</span>
+                        }
+                        else{
+                            <span class="selected">Your name</span>
+                        }                        
                         <div class="caret"></div>
                     </div>
                     <ul class="menu">
@@ -38,7 +46,12 @@
                         <a asp-action="Create" asp-controller="Home">
                             <li>Add composition</li>
                         </a>
-                        <li>Log out</li>
+                        @if (ViewBag.Login != null)
+                        {
+                            <a asp-action="Logout" asp-controller="Account">
+                                <li>Log out</li>
+                            </a>
+                        }                      
                     </ul>
                 </div>
             </div>
@@ -58,6 +71,7 @@
     </div>
     </div>
     <script src="~/js/dropdown-menu-code.js"></script>
+    <script src="~/js/textshow.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

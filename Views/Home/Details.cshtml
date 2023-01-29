@@ -1,0 +1,75 @@
+﻿@model Composition
+
+<link href="~/css/details.css" rel="stylesheet" />
+
+<div class="frame7710-frame7710">
+    <div class="frame7710-frame7720">
+        <div class="frame7710-frame7661">
+            <div class="frame7710-frame7663">
+                <div class="frame7710-frame7670">
+                    <a href="index.html" class="backarrow">&#11178; Back</a>
+                    <span class="frame7710-text"><span>@Model.Genre.Name</span></span>
+                    
+                </div>
+                <span class="frame7710-text04">
+                    <span>@Model.Title</span>
+                </span>
+                <span class="frame7710-text06">
+                    <span>
+                        @Model.Description
+                    </span>
+                </span>
+            </div>
+            <div class="frame7710-frame7697">
+                <div class="frame7710-article-author">
+                    <img alt="Avatar1031" src="~/images/userIcon.png" class="frame7710-avatar" />
+                    <div class="frame7710-author-text">
+                        <span class="frame7710-text08"><span>@Model.User.Login</span></span>
+                        <span class="frame7710-text10">
+                            <span>Posted on @Model.Date</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="rate">
+                    <input type="radio" id="star5" name="rate" value="5" />
+                    <label for="star5" title="text">5 stars</label>
+                    <input type="radio" id="star4" name="rate" value="4" />
+                    <label for="star4" title="text">4 stars</label>
+                    <input type="radio" id="star3" name="rate" value="3" />
+                    <label for="star3" title="text">3 stars</label>
+                    <input type="radio" id="star2" name="rate" value="2" />
+                    <label for="star2" title="text">2 stars</label>
+                    <input type="radio" id="star1" name="rate" value="1" />
+                    <label for="star1" title="text">1 star</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mainparttext">
+        @Model.Text.Content
+    </div>
+    <div class="pages">
+    </div>
+
+    <div class="comments">
+        <h2>Commends:</h2>
+
+        <div class="comblock gray">
+            <span>Write new commend</span>
+            <hr>
+            <textarea name="content" maxlength="150"></textarea>
+            <a href="#"><span class="commbtn">Comment</span></a>
+        </div>
+        @foreach (var item in @Model.Comments)
+        {
+            <div class="comblock">
+                <span>Name</span>
+                <hr>
+                <p>
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea ab ipsa eligendi illo, itaque error explicabo
+                    temporibus vero, aliquam enim quisquam voluptatem ut laudantium culpa molestias officia cupiditate eos cum!
+                </p>
+            </div>
+        }
+    </div>
+</div>

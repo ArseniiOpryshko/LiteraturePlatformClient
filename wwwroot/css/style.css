@@ -399,7 +399,8 @@ body, html{
     flex-shrink: 0;
     border-color: transparent;
   }
-  .blog-home-frame7639 {
+.blog-home-frame7639 {
+    width: 628px;
     display: flex;
     overflow: hidden;
     position: relative;
@@ -412,12 +413,14 @@ body, html{
     margin-right: 20px;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 1);
-    
     cursor: pointer;
     height: 180px;
     margin-bottom: 30px;
-  }
-
+    transition: 0.2s;
+}
+    .blog-home-frame7639:hover {
+        background-color: rgba(246, 246, 246, 1);
+    }
   .blog-home-frame7715 {
     height: 200px;
     display: flex;
@@ -436,7 +439,15 @@ body, html{
     position: relative;
     border-color: transparent;
   }
+.bigimage {
+    width: 100%;
+    height: 220px; 
+    height: 100%;
+    position: relative;
+    border-color: transparent;
+}
   .blog-home-frame7645 {
+      color: black;
     display: flex;
     padding: 16px;
     position: relative;
@@ -538,7 +549,7 @@ body, html{
     flex-direction: column;
   }
   .blog-home-text26 {
-    color: rgba(73, 83, 103, 1);
+    color: black;
     width: 145px;
     height: auto;
     font-size: 17px;
@@ -959,6 +970,8 @@ body, html{
     text-decoration: none;
   }
   .blog-home-frame7658 {
+    margin-right: 40px;
+    margin-bottom: 30px;
     width: 381px;
     display: flex;
     position: relative;
@@ -1001,6 +1014,7 @@ body, html{
     margin-bottom: 4px;
   }
   .blog-home-frame76452 {
+      color: black;
     display: flex;
     padding: 16px;
     position: relative;
@@ -1122,21 +1136,22 @@ body, html{
     border-color: transparent;
     flex-direction: column;
   }
-  .blog-home-text60 {
+.blog-home-text60 {
     color: var(--dl-color-studio_darkmode-exportbg1a202e);
-    height: auto;
+    height: 55px;
+    width: 100%;
+    overflow: hidden;
     font-size: 16px;
     align-self: stretch;
     font-style: Regular;
     text-align: left;
-     
     font-weight: 400;
     line-height: 28px;
     font-stretch: normal;
     margin-right: 0;
     margin-bottom: 0;
     text-decoration: none;
-  }
+}
   .blog-home-line23 {
     width: 348px;
     height: 0px;
@@ -1237,9 +1252,9 @@ body, html{
     
     position: absolute;
     top: 50px;
-    left: 0;
-    width: 200%;
-    transform: translateX(-50%);
+    right: 10px;
+    width: 300px;
+    /*transform: translateX(-50%);*/
     opacity: 0;
     display: none;
     transition: 0.2s;
@@ -1266,4 +1281,9 @@ body, html{
 .menu a {
     color: black;
     text-decoration: none;
+}
+.allcompos{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
 }

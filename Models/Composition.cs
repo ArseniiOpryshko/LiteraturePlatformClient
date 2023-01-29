@@ -16,6 +16,7 @@ namespace LiteraturePlatformClient.Models
         public Text Text { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
+
         public byte[]? Image { get; set; }
 
         public int UserId { get; set; }

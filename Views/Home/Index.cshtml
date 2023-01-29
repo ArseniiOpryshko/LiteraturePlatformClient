@@ -23,13 +23,13 @@
                             @ViewBag.Top1.Description
                     </span>
                   </span>
-                  <div class="blog-home-continuebtn">
-                    <a style="text-decoration: none;" href="Details.html">
+                  <a style="text-decoration: none;" asp-action="Details" asp-route-id="@ViewBag.Top1.CompositionId" asp-controller="Home">
+                  <div class="blog-home-continuebtn">               
                       <span class="blog-home-text12">
                         <span>Continue reading &#10132;</span>
-                      </span>
-                    </a>
+                      </span>                   
                   </div>
+                  </a>
                 </div>
               </div>
             @Html.Raw("<img alt='Line29221' class='blog-home-line2' src=\"data:image/jpeg;base64,"
@@ -37,9 +37,9 @@
               <div class="blog-home-article-author">
                 <img class="user-icon" src="~/images/userIcon.png" alt="">
                 <div class="blog-home-author-text">
-                  <span class="blog-home-text14"><span>Anna Rosé</span></span>
+                    <span class="blog-home-text14"><span>@ViewBag.Top1.User.Login</span></span>
                   <span class="blog-home-text16">
-                    <span>Posted just now</span>
+                    <span>@ViewBag.Top1.Date</span>
                   </span>
                 </div>
               </div>
@@ -51,70 +51,42 @@
           <div class="blog-home-frame7681">
             <span class="blog-home-text18"><span>Latest publications</span></span>
             <div class="blog-home-frame7677">
-              <div class="blog-home-frame7639">
-                <img src="~/images/creepy-forest.jpg" alt="Rectangle4789221" class="blog-home-rectangle478" />
-                <div class="blog-home-frame7645">
-                  <div class="blog-home-frame7640">
-                    <div class="blog-home-frame7656">
-                      <span class="blog-home-text20">
-                        <span>Design to code</span>
-                      </span>
-                      <div class="blog-home-frame76411">
-                        
-                      </div>
-                    </div>
-                    <span class="blog-home-text24">
-                      <span>Figma for Developers</span>
-                    </span>
-                  </div>
-                    <img src="~/images/creepy-forest.jpg" alt="Line29221" class="blog-home-line21" />
-                  <div class="blog-home-article-author1">
-                        <img class="user-icon" src="~/images/userIcon.png" alt="">
-                    <div class="blog-home-author-text1">
-                      <span class="blog-home-text26">
-                        <span>Justin Chen</span>
-                      </span>
-                      <span class="blog-home-text28">
-                        <span>Posted just now</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="blog-home-frame7677">
-                <div class="blog-home-frame7639">
-                    <img src="~/images/creepy-forest.jpg" alt="Rectangle4789221" class="blog-home-rectangle478" />
-                  <div class="blog-home-frame7645">
-                    <div class="blog-home-frame7640">
-                      <div class="blog-home-frame7656">
-                        <span class="blog-home-text20">
-                          <span>Design to code</span>
-                        </span>
-                        <div class="blog-home-frame76411">
-                          
-                        </div>
-                      </div>
-                      <span class="blog-home-text24">
-                        <span>Figma for Developers</span>
-                      </span>
-                    </div>
-                        <img src="~/images/creepy-forest.jpg" alt="Line29221" class="blog-home-line21" />
-                    <div class="blog-home-article-author1">
-                            <img class="user-icon" src="~/images/userIcon.png" alt="">
-                      <div class="blog-home-author-text1">
-                        <span class="blog-home-text26">
-                          <span>Justin Chen</span>
-                        </span>
-                        <span class="blog-home-text28">
-                          <span>Posted just now</span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
 
-              </div>
-            </div>
+            @foreach (var item in ViewBag.Latest)
+            {
+                <a style="text-decoration: none;" asp-action="Details" asp-route-id="@item.CompositionId" asp-controller="Home">
+                    <div class="blog-home-frame7639">
+                        @Html.Raw("<img alt='Line29221' class='blog-home-rectangle478' src=\"data:image/jpeg;base64,"
+                            + Convert.ToBase64String(@item.Image) + "\" />")
+                        <div class="blog-home-frame7645">
+                            <div class="blog-home-frame7640">
+                                <div class="blog-home-frame7656">
+                                    <span class="blog-home-text20">
+                                        <span>@item.Genre.Name</span>
+                                    </span>
+                                
+                                </div>
+                                <span class="blog-home-text24">
+                                    <span>@item.Title</span>
+                                </span>
+                            </div>
+                            <div class="blog-home-article-author1">
+                                <img class="user-icon" src="~/images/userIcon.png" alt="">
+                                <div class="blog-home-author-text1">
+                                    <span class="blog-home-text26">
+                                        <span>@item.User.Login</span>
+                                    </span>
+                                    <span class="blog-home-text28">
+                                        <span>Posted at @(DateTime.Now.Subtract(item.Date).ToString("mm"))</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            }
+
+        </div>
             <div class="blog-home-frame7680">
               <div class="blog-home-blogcatheaders">
                 <span class="blog-home-text40">
@@ -138,36 +110,54 @@
                   </div>
                 </div>
               </div>
-              <div class="blog-home-frame7658">
-                <div class="blog-home-frame76391">
-                    <img src="~/images/creepy-forest.jpg" alt="Rectangle4789222" class="blog-home-rectangle4782" />
-                  <div class="blog-home-frame76452">
-                    <div class="blog-home-frame7657">
-                      <div class="blog-home-frame76402">
-                        <div class="blog-home-frame76562">
-                          <span class="blog-home-text54">
-                            <span>Design to code</span>
-                          </span>
-                          <div class="blog-home-frame76413">
-                          </div>
+              
+              <div class="allcompos"> 
+              @foreach (var item in ViewBag.All)
+              {
+                <div class="blog-home-frame7658">
+                    <a style="text-decoration: none;" asp-action="Details" asp-route-id="@item.CompositionId" asp-controller="Home">
+                    <div class="blog-home-frame76391">
+                        @Html.Raw("<img alt='Line29221' class='bigimage' src=\"data:image/jpeg;base64,"
+                    + Convert.ToBase64String(@item.Image) + "\" />")
+                        <div class="blog-home-frame76452">
+                            <div class="blog-home-frame7657">
+                                <div class="blog-home-frame76402">
+                                    <div class="blog-home-frame76562">
+                                        <span class="blog-home-text54">
+                                            <span>@item.Genre.Name</span>
+                                        </span>
+                                       
+                                    </div>
+                                    <span class="blog-home-text58">
+                                        <span>@item.Title</span>
+                                    </span>
+                                </div>
+                                <div class="blog-home-frame7642">
+                                    <span class="blog-home-text60">
+                                            @item.Description
+                                    </span>
+                                </div>
+                                    
+                            </div>
+                            <div class="blog-home-article-author1">
+                                        <img class="user-icon" src="~/images/userIcon.png" alt="">
+                                        <div class="blog-home-author-text1">
+                                            <span class="blog-home-text26">
+                                                <span>@item.User.Login</span>
+                                            </span>
+                                            <span class="blog-home-text28">
+                                            <span>Posted at @item.Date</span>
+                                            </span>
+                                        </div>
+                            </div>
                         </div>
-                        <span class="blog-home-text58">
-                          <span>Locofy.ai – Turn Figma to Code!</span>
-                        </span>
-                      </div>
-                      <div class="blog-home-frame7642">
-                        <span class="blog-home-text60">
-                          <span>
-                            Go from Figma to code in minimum amount of time using
-                            Locofy. Take your..
-                          </span>
-                        </span>
-                      </div>
                     </div>
-                    <img src="~/images/creepy-forest.jpg" alt="Line29222" class="blog-home-line23" />
-                  </div>
+                    </a>
                 </div>
-              </div>
+            }
+
+            </div>
+
             </div>
           </div>
 </div>

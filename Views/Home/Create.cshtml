@@ -16,21 +16,21 @@
                 </div>
                 <div>
                     <label for="Cover">Image</label>
-                    <input type="file" name="files" class="cover" accept="image/*">
+                    <input type="file" name="files" class="cover" accept="image/*" required>
                 </div>
                 <div>
                     <label for="Name">Genre</label>
-                    <select name="Genre" class="genre">
+                    <select name="Genre" class="genre" >
                         @foreach (var item in ViewBag.Genres)
                         {
-                            <option selected value="@item.GenreId">@item.Name</option>
+                            <option value="@item.GenreId">@item.Name</option>
                         }
 
                     </select>
                 </div>
                 <div>
                     <label for="Text">Text</label>
-                    <input type="file" name="files" class="cover" accept=".txt">
+                    <input type="file" name="files" class="cover" accept=".txt" required>
                 </div>
                 <input class="mbtn" type="submit" value="Add">
             </form>

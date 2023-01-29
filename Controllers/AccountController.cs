@@ -33,7 +33,6 @@ namespace LiteraturePlatformClient.Controllers
         public async Task<IActionResult> Login(User user)
         {
             var client = clientFactory.CreateClient();
-            user.Login = "qwe";
             var registermodelJson = new StringContent(
                System.Text.Json.JsonSerializer.Serialize(user),
                Encoding.UTF8,
@@ -51,15 +50,12 @@ namespace LiteraturePlatformClient.Controllers
 
             return View();
         }
-
-
-
-        //[HttpGet("Logout")]
-        //public IActionResult Logout()
-        //{
-        //    HttpContext.Session.Remove("Token");
-        //    return NoContent();
-        //}
+        [HttpGet("Logout")]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("Token");
+            return RedirectToAction("Index", "Home");
+        }
 
         [HttpPost]
         [Route("Register")]
