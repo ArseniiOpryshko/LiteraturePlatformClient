@@ -15,7 +15,9 @@
                 <div>
                     <label asp-for="Email">Email</label>
                     <input type="text" asp-for="Email" id="email" required>
-                    <span style="color: red" asp-validation-for="Email"></span>
+                    <span style="color: red" asp-validation-for="Email">
+                        @(ViewBag.EmailError != null ? ViewBag.EmailError : "")
+                    </span>
                 </div>
                 <div>
                     <label asp-for="Password">Password</label>

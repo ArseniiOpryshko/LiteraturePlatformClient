@@ -53,23 +53,26 @@
 
     <div class="comments">
         <h2>Commends:</h2>
-
         <div class="comblock gray">
-            <span>Write new commend</span>
-            <hr>
-            <textarea name="content" maxlength="150"></textarea>
-            <a href="#"><span class="commbtn">Comment</span></a>
-        </div>
-        @foreach (var item in @Model.Comments)
-        {
-            <div class="comblock">
-                <span>Name</span>
+            <form method="post" asp-action="AddComment" asp-controller="Home">
+                <input style="display: none" type="number" name="compositionId" value="@Model.CompositionId" />
+                <span>Write new commend</span>
                 <hr>
-                <p>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea ab ipsa eligendi illo, itaque error explicabo
-                    temporibus vero, aliquam enim quisquam voluptatem ut laudantium culpa molestias officia cupiditate eos cum!
-                </p>
-            </div>
-        }
+                <textarea name="content" maxlength="150"></textarea>
+                <input class="commbtn" type="submit" value="Comment" />
+            </form>
+        </div>
+        <div class="flexrev">
+            @foreach (var item in @Model.Comments)
+            {
+                <div class="comblock">
+                    <span>@item.User.Login</span>
+                    <hr>
+                    <p>
+                        @item.Text
+                    </p>
+                </div>
+            }
+        </div>
     </div>
 </div>

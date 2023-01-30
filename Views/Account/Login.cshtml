@@ -1,4 +1,4 @@
-﻿@page
+﻿@model LiteraturePlatformClient.Models.User
 
 <div class="inputblock">
     <div class="innerblock">
@@ -8,6 +8,9 @@
                 <div>
                     <label for="Email">Email</label>
                     <input type="text" name="Email" id="email" required>
+                    <span style="color: red">
+                        @(ViewBag.LoginError != null ? ViewBag.LogError : "")
+                    </span>
                 </div>
                 <div>
                     <label for="Password">Password</label>

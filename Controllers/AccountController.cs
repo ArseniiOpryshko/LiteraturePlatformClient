@@ -46,6 +46,11 @@ namespace LiteraturePlatformClient.Controllers
                     HttpContext.Session.SetString("Token", encodedJwt);
                     return RedirectToAction("Index", "Home");
                 }
+                else
+                {
+                    string jsonString = await response.Content.ReadAsStringAsync();
+                    ViewBag.LoginError = jsonString;
+                }
             }
 
             return View();
@@ -74,8 +79,12 @@ namespace LiteraturePlatformClient.Controllers
                 {
                     if (response.IsSuccessStatusCode)
                     {
-                        //string jsonString = await response.Content.ReadAsStringAsync();
                         return RedirectToAction("Login");
+                    }
+                    else
+                    {
+                        string jsonString = await response.Content.ReadAsStringAsync();
+                        ViewBag.EmailError = jsonString;
                     }
                 }           
             }

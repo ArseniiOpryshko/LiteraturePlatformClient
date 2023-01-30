@@ -8,11 +8,11 @@
             <form enctype="multipart/form-data" method="post" asp-action="Create">
                 <div>
                     <label for="Title">Title</label>
-                    <input type="text" asp-for="Title" minlength="5" maxlength="20" required>
+                    <input type="text" asp-for="Title" minlength="2" maxlength="40" required>
                 </div>
                 <div>
                     <label for="Description">Description</label>
-                    <input type="text" asp-for="Description" required minlength="13" maxlength="50">
+                    <input type="text" asp-for="Description" required minlength="20" maxlength="100">
                 </div>
                 <div>
                     <label for="Cover">Image</label>

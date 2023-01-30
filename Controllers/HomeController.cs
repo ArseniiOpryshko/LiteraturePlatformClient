@@ -20,18 +20,10 @@ namespace LiteraturePlatformClient.Controllers
         {
             this.clientFactory = clientFactory;
         }
-
         public async Task<IActionResult> IndexAsync()
         {
-            ViewBag.Compositions = await GetAll();
-            ViewBag.Top1 = await GetTop1Raiting();
-            ViewBag.Latest = await GetLatest();
+            bool a = await initPage();
             ViewBag.All = await GetAll();
-
-            if (User.Claims.FirstOrDefault(x => x.Type.ToString() == "Login") != null)
-            {
-                ViewBag.Login = User.Claims.FirstOrDefault(x => x.Type.ToString() == "Login").Value;               
-            }
 
             return View();
         }
@@ -186,12 +178,15 @@ namespace LiteraturePlatformClient.Controllers
         [Authorize]
         [HttpPost]
         [Route("AddComment")]
-        public async Task<IActionResult> AddComment([FromBody]int compositionId, [FromBody]string content)
+        public async Task<IActionResult> AddComment([FromForm]int compositionId, [FromForm] string content)
         {
-            Text text = new Text()
+            int userid = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type.ToString() == "Id").Value);
+            Comment text = new Comment()
             {
-                TextId = compositionId,
-                Content = content,
+                CommentId = compositionId,
+                UserId = userid,
+                Text = content,
+
             };
 
             var client = clientFactory.CreateClient();
@@ -204,10 +199,75 @@ namespace LiteraturePlatformClient.Controllers
             {
                 if (request.IsSuccessStatusCode)
                 {
-                    return Redirect("Details");
-                }
+                    return Redirect("Details/" + compositionId);
+                }   
             }
             return BadRequest();
+        }
+
+        [HttpGet]
+        [Route("FindByGenre/{id}")]
+        public async Task<IActionResult> FindByGenre(int id)
+        {
+            var client = clientFactory.CreateClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7285/Platform/FindByGenre/"+id);
+            HttpResponseMessage response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                bool a = await initPage();
+                string jsonString = await response.Content.ReadAsStringAsync();
+                ViewBag.All = JsonConvert.DeserializeObject<IEnumerable<Composition>>(jsonString).ToList<Composition>();
+
+                return View("Index");
+            }
+            return BadRequest();
+        }
+
+
+        [HttpGet]
+        [Route("GetTop50Rating")]
+        public async Task<IActionResult> GetTop50Rating()
+        {
+            var client = clientFactory.CreateClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7285/Platform/GetTop50Rating");
+            HttpResponseMessage response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                bool a = await initPage();
+                string jsonString = await response.Content.ReadAsStringAsync();
+                ViewBag.All = JsonConvert.DeserializeObject<IEnumerable<Composition>>(jsonString).ToList<Composition>();
+                return View("Index");
+            }
+            return BadRequest();
+        }
+        [HttpGet]
+        [Route("GetTop50Comments")]
+        public async Task<IActionResult> GetTop50Comments()
+        {
+            var client = clientFactory.CreateClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7285/Platform/GetTop50Comments");
+            HttpResponseMessage response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                bool a = await initPage();
+                string jsonString = await response.Content.ReadAsStringAsync();
+                ViewBag.All = JsonConvert.DeserializeObject<IEnumerable<Composition>>(jsonString).ToList<Composition>();
+                return View("Index");
+            }
+            return BadRequest();
+        }
+        async Task<bool> initPage()
+        {
+            ViewBag.Compositions = await GetAll();
+            ViewBag.Top1 = await GetTop1Raiting();
+            ViewBag.Latest = await GetLatest();
+            ViewBag.Genres = await GetGenres();
+
+            if (User.Claims.FirstOrDefault(x => x.Type.ToString() == "Login") != null)
+            {
+                ViewBag.Login = User.Claims.FirstOrDefault(x => x.Type.ToString() == "Login").Value;
+            }
+            return true;
         }
     }
 }

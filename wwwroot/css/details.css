@@ -2,7 +2,7 @@
 
 .frame7710-frame7710 {
     margin: 0 auto;
-    width: 70%;
+    width: 1200px;
     height: auto;
     display: flex;
     position: relative;
@@ -220,7 +220,7 @@
   .mainparttext{
     width: 70%;
     max-width: 1000px;
-    min-height: 800px;
+    height: 800px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(222, 227, 234, 1) ;
     padding: 20px;
@@ -257,13 +257,14 @@
     transform: translate(-50%,-50%);
   }
   .comments{
-    /* width: 100%; */
+    width: 100%; 
     margin: 0 40px;
   }
   .comments h2{
     text-align: left;
   }
   .comblock span{
+
     font-weight: 600;
     font-size: 19px;
   }
@@ -346,8 +347,17 @@
     width: 125px;
     color: black;
     transition: 0.2s;
+    border: none;
+    outline: none;
+
 }
 
     .commbtn:hover {
         background-color: rgb(173, 173, 173);
     }
+.flexrev{
+    width: 100%;
+
+    display: flex;
+    flex-direction: column-reverse;
+}

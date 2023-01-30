@@ -45,7 +45,8 @@
               </div>
             </div>
             <div class="blog-home-frame7714">
-            <img src="~/images/creepy-forest.jpg" alt="image329330" class="blog-home-image32" />
+            @Html.Raw("<img alt='Line29221' class='blog-home-rectangle478' src=\"data:image/jpeg;base64,"
+            + Convert.ToBase64String(@ViewBag.Top1.Image) + "\" />")
             </div>
           </div>
           <div class="blog-home-frame7681">
@@ -56,8 +57,10 @@
             {
                 <a style="text-decoration: none;" asp-action="Details" asp-route-id="@item.CompositionId" asp-controller="Home">
                     <div class="blog-home-frame7639">
-                        @Html.Raw("<img alt='Line29221' class='blog-home-rectangle478' src=\"data:image/jpeg;base64,"
-                            + Convert.ToBase64String(@item.Image) + "\" />")
+                        <div class="outimg">
+                            @Html.Raw("<img alt='Line29221' class='blog-home-rectangle478' src=\"data:image/jpeg;base64,"
+                        + Convert.ToBase64String(@item.Image) + "\" />")
+                        </div>
                         <div class="blog-home-frame7645">
                             <div class="blog-home-frame7640">
                                 <div class="blog-home-frame7656">
@@ -77,7 +80,17 @@
                                         <span>@item.User.Login</span>
                                     </span>
                                     <span class="blog-home-text28">
-                                        <span>Posted at @(DateTime.Now.Subtract(item.Date).ToString("mm"))</span>
+                                        @if (DateTime.Now.Subtract(item.Date).TotalMinutes < 3)
+                                        {
+                                            <span>Posted just now</span>
+                                        }
+                                        else if (DateTime.Now.Subtract(item.Date).TotalMinutes < 15){
+                                            <span>Posted @DateTime.Now.Subtract(item.Date).ToString(@"mm") minutes ago</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Posted at @item.Date</span>
+                                        }
                                     </span>
                                 </div>
                             </div>
@@ -93,69 +106,83 @@
                   <span>Published works</span>
                 </span>
                 <div class="blog-home-blogcategories">
-                  <div class="blog-home-frame7650">
-                    <span class="blog-home-text42"><span>All</span></span>
-                  </div>
-                  <div class="blog-home-frame7650">
-                    <span class="blog-home-text42"><span>Design</span></span>
-                  </div>
-                  <div class="blog-home-frame7650">
-                    <span class="blog-home-text42"><span>Top 50 by genre</span></span>
-                  </div>
-                  <div class="blog-home-frame7650">
-                    <span class="blog-home-text42"><span>Top 50 by rating</span></span>
-                  </div>
-                  <div class="blog-home-frame7650">
-                    <span class="blog-home-text42"><span>Top 50 by comments</span></span>
-                  </div>
+                    <a asp-action="Index" asp-controller="Home" class="non-a">
+                      <div class="blog-home-frame7650">
+                        <span class="blog-home-text42"><span>All</span></span>
+                      </div>
+                    </a>
+                    @foreach (var item in ViewBag.Genres)
+                    {
+                        <a asp-action="FindByGenre" asp-route-id="@item.GenreId" asp-controller="Home" class="non-a">
+                            <div class="blog-home-frame7650">
+                                <span class="blog-home-text42"><span>@item.Name</span></span>
+                            </div>
+                        </a>                       
+                    }
+                    <a asp-action="GetTop50Rating" asp-controller="Home" class="non-a">
+                      <div class="blog-home-frame7650">
+                        <span class="blog-home-text42"><span>Top 50 by rating</span></span>
+                      </div>
+                    </a>
+                    <a asp-action="GetTop50Comments" asp-controller="Home" class="non-a">
+                      <div class="blog-home-frame7650">
+                        <span class="blog-home-text42"><span>Top 50 by comments</span></span>
+                      </div>
+                    </a>
                 </div>
               </div>
               
-              <div class="allcompos"> 
-              @foreach (var item in ViewBag.All)
-              {
-                <div class="blog-home-frame7658">
-                    <a style="text-decoration: none;" asp-action="Details" asp-route-id="@item.CompositionId" asp-controller="Home">
-                    <div class="blog-home-frame76391">
-                        @Html.Raw("<img alt='Line29221' class='bigimage' src=\"data:image/jpeg;base64,"
-                    + Convert.ToBase64String(@item.Image) + "\" />")
-                        <div class="blog-home-frame76452">
-                            <div class="blog-home-frame7657">
-                                <div class="blog-home-frame76402">
-                                    <div class="blog-home-frame76562">
-                                        <span class="blog-home-text54">
-                                            <span>@item.Genre.Name</span>
-                                        </span>
-                                       
+              <div class="allcompos">   
+              @if(ViewBag.All == null || ViewBag.All.Count == 0){
+                  <h2>Compositions wasn`t found</h2>
+              }
+              else{
+                    @foreach (var item in ViewBag.All)
+                    {
+                        <div class="blog-home-frame7658">
+                            <a style="text-decoration: none;" asp-action="Details" asp-route-id="@item.CompositionId" asp-controller="Home">
+                                <div class="blog-home-frame76391">
+                                    <div class="outimgBig">
+                                        @Html.Raw("<img alt='Line29221' class='bigimage' src=\"data:image/jpeg;base64,"
+                                + Convert.ToBase64String(@item.Image) + "\" />")
                                     </div>
-                                    <span class="blog-home-text58">
-                                        <span>@item.Title</span>
-                                    </span>
-                                </div>
-                                <div class="blog-home-frame7642">
-                                    <span class="blog-home-text60">
-                                            @item.Description
-                                    </span>
-                                </div>
-                                    
-                            </div>
-                            <div class="blog-home-article-author1">
-                                        <img class="user-icon" src="~/images/userIcon.png" alt="">
-                                        <div class="blog-home-author-text1">
-                                            <span class="blog-home-text26">
-                                                <span>@item.User.Login</span>
-                                            </span>
-                                            <span class="blog-home-text28">
-                                            <span>Posted at @item.Date</span>
-                                            </span>
-                                        </div>
-                            </div>
-                        </div>
-                    </div>
-                    </a>
-                </div>
-            }
+                                    <div class="blog-home-frame76452">
+                                        <div class="blog-home-frame7657">
+                                            <div class="blog-home-frame76402">
+                                                <div class="blog-home-frame76562">
+                                                    <span class="blog-home-text54">
+                                                        <span>@item.Genre.Name</span>
+                                                    </span>
 
+                                                </div>
+                                                <span class="blog-home-text58">
+                                                    <span>@item.Title</span>
+                                                </span>
+                                            </div>
+                                            <div class="blog-home-frame7642">
+                                                <span class="blog-home-text60">
+                                                    @item.Description
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                        <div class="blog-home-article-author1">
+                                            <img class="user-icon" src="~/images/userIcon.png" alt="">
+                                            <div class="blog-home-author-text1">
+                                                <span class="blog-home-text26">
+                                                    <span>@item.User.Login</span>
+                                                </span>
+                                                <span class="blog-home-text28">
+                                                    <span>Posted at @item.Date</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+              }             
             </div>
 
             </div>

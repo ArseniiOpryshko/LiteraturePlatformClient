@@ -5,9 +5,9 @@ let lenght = text.length;
 let textArray = [];
 let row = 0;
 
-for (let i = 0; i < text.length/2650; i++) {
-    textArray[i] = text.substring(row, row+2650);
-    row+=2650; 
+for (let i = 0; i < text.length / 2210; i++) {
+    textArray[i] = text.substring(row, row + 2210);
+    row += 2100; 
     pages.innerHTML+="<div data-index=\"" + (i) + "\" class=\"number\"><span>" + (i+1) + "</span></div>";
 }
 main.innerHTML=textArray[0];
