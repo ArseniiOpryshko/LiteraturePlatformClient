@@ -349,8 +349,10 @@ body, html{
     margin-bottom: 0;
     text-decoration: none;
   }
-  .blog-home-frame7714 {
-    /*width: 707px;*/
+.blog-home-frame7714 {
+    border-radius: 7px;
+    background-color: #E8E8E8;
+    height: 479px;
     display: flex;
     position: relative;
     flex-grow: 1;
@@ -358,7 +360,7 @@ body, html{
     flex-shrink: 0;
     border-color: transparent;
     flex-direction: column;
-  }
+}
   .blog-home-image32 {
     margin-left: 30px;
     width: 707px;
@@ -433,13 +435,20 @@ body, html{
     flex-direction: column;
   }
   .blog-home-rectangle478 {
-    max-width: 230px;
+    width: 300px;
+    align-self: center;
+    height: 100%;
+    position: relative;
+    border-color: transparent;
+  }
+.imagesmid {
+    max-width: 260px;
     width: auto;
     /* height: 220px; */
     height: 100%;
     position: relative;
     border-color: transparent;
-  }
+}
 .bigimage {
     /*width: 100%;*/
     height: 220px; 

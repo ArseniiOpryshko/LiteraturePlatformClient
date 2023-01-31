@@ -1,0 +1,33 @@
+﻿@model User
+
+<div class="blog-home-blogcontainer">
+    <div class="centerblock">
+        <div class="infoblock">
+            <img class="imgac" src="~/images/userIcon.png" alt="">
+            <div class="innerinfo">
+                <form asp-action="Account" method="post">
+                    <input style="display: none" type="text" asp-for="@Model.UserId">
+                    <div>
+                        <label for="Login">Login</label>
+                        <input type="text" required minlength="3" maxlength="30" asp-for="@Model.Login">
+                    </div>
+                    <div>
+                        <label for="Email">Email</label>
+                        <input type="text" required maxlength="50" asp-for="@Model.Email">
+                    </div>
+                    <div>
+                        <label for="Password">Password</label>
+                        <input type="text" name="Password" required asp-for="@Model.Password">
+                    </div>
+                    <input class="mbtn" type="submit" value="Save changes">
+                    <span style="color: lawngreen">
+                        @(ViewBag.Message != null ? ViewBag.Message : "")
+                    </span>
+                </form>
+            </div>
+        </div>
+        <div class="myhr"></div>
+
+        <a asp-action="DeleteUser" asp-route-id="@Model.UserId" asp-controller="Home"><div class="deletebtn">Delete account</div></a>
+    </div>
+</div>

@@ -22,7 +22,7 @@ namespace LiteraturePlatformClient.Controllers
         }
         public async Task<IActionResult> IndexAsync()
         {
-            bool a = await initPage();
+            await initPage();
             ViewBag.All = await GetAll();
 
             return View();
@@ -92,11 +92,11 @@ namespace LiteraturePlatformClient.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateAsync([Bind("Title, Description")] Composition composition, 
+        public async Task<IActionResult> CreateAsync([Bind("Title, Description")] Composition composition,
             [FromForm] int Genre, List<IFormFile> files)
         {
             if (files.Count == 2)
-            {              
+            {
                 int userId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type.ToString() == "Id").Value);
 
                 byte[] imageData = null;
@@ -105,7 +105,7 @@ namespace LiteraturePlatformClient.Controllers
                 {
                     imageData = binaryReader.ReadBytes((int)files[0].Length);
                 }
-                
+
 
                 using (var streamReader = new StreamReader(files[1].OpenReadStream()))
                 {
@@ -154,18 +154,21 @@ namespace LiteraturePlatformClient.Controllers
         [Route("Details/{id}")]
         public async Task<IActionResult> Details(int id)
         {
+            Composition comp = await GetComposition(id);
             if (User.Claims.FirstOrDefault(x => x.Type.ToString() == "Login") != null)
             {
                 ViewBag.Login = User.Claims.FirstOrDefault(x => x.Type.ToString() == "Login").Value;
+                int userId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type.ToString() == "Id").Value);
+                ViewBag.CurrRate = await CurrRate(comp.CompositionId, userId);
             }
-            var comp = await GetComposition(id);
+
             return View(comp);
         }
         public async Task<Composition> GetComposition(int id)
         {
             Composition Compositions = null;
             var client = clientFactory.CreateClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7285/Platform/GetComposition/"+ id);
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7285/Platform/GetComposition/" + id);
             HttpResponseMessage response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
@@ -175,10 +178,24 @@ namespace LiteraturePlatformClient.Controllers
             return Compositions;
         }
 
+        public async Task<int> CurrRate(int composId, int userId)
+        {
+            int res = 0;
+            var client = clientFactory.CreateClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, $"https://localhost:7285/Platform/CurrRate/{userId}/{composId}");
+            HttpResponseMessage response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonString = await response.Content.ReadAsStringAsync();
+                res = JsonConvert.DeserializeObject<int>(jsonString);
+            }
+            return res;
+        }
+
         [Authorize]
         [HttpPost]
         [Route("AddComment")]
-        public async Task<IActionResult> AddComment([FromForm]int compositionId, [FromForm] string content)
+        public async Task<IActionResult> AddComment([FromForm] int compositionId, [FromForm] string content)
         {
             int userid = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type.ToString() == "Id").Value);
             Comment text = new Comment()
@@ -200,7 +217,7 @@ namespace LiteraturePlatformClient.Controllers
                 if (request.IsSuccessStatusCode)
                 {
                     return Redirect("Details/" + compositionId);
-                }   
+                }
             }
             return BadRequest();
         }
@@ -210,11 +227,11 @@ namespace LiteraturePlatformClient.Controllers
         public async Task<IActionResult> FindByGenre(int id)
         {
             var client = clientFactory.CreateClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7285/Platform/FindByGenre/"+id);
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7285/Platform/FindByGenre/" + id);
             HttpResponseMessage response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
-                bool a = await initPage();
+                await initPage();
                 string jsonString = await response.Content.ReadAsStringAsync();
                 ViewBag.All = JsonConvert.DeserializeObject<IEnumerable<Composition>>(jsonString).ToList<Composition>();
 
@@ -233,7 +250,7 @@ namespace LiteraturePlatformClient.Controllers
             HttpResponseMessage response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
-                bool a = await initPage();
+                await initPage();
                 string jsonString = await response.Content.ReadAsStringAsync();
                 ViewBag.All = JsonConvert.DeserializeObject<IEnumerable<Composition>>(jsonString).ToList<Composition>();
                 return View("Index");
@@ -249,7 +266,7 @@ namespace LiteraturePlatformClient.Controllers
             HttpResponseMessage response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
-                bool a = await initPage();
+                await initPage();
                 string jsonString = await response.Content.ReadAsStringAsync();
                 ViewBag.All = JsonConvert.DeserializeObject<IEnumerable<Composition>>(jsonString).ToList<Composition>();
                 return View("Index");
@@ -268,6 +285,85 @@ namespace LiteraturePlatformClient.Controllers
                 ViewBag.Login = User.Claims.FirstOrDefault(x => x.Type.ToString() == "Login").Value;
             }
             return true;
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("Rate")]
+        public async Task<IActionResult> Rate([FromForm] int composId, [FromForm] int rating)
+        {
+            int userId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type.ToString() == "Id").Value);
+
+            var client = clientFactory.CreateClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, $"https://localhost:7285/Platform/Rate/{composId}/{userId}/{rating}");
+            HttpResponseMessage response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                return Redirect($"Details/{composId}");
+            }
+            return BadRequest();
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("Account")]
+        public async Task<IActionResult> Account()
+        {
+            if (User.Claims.FirstOrDefault(x => x.Type.ToString() == "Login") != null)
+            {
+                ViewBag.Login = User.Claims.FirstOrDefault(x => x.Type.ToString() == "Login").Value;
+            }
+
+            int userId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type.ToString() == "Id").Value);
+
+            var client = clientFactory.CreateClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, $"https://localhost:7285/Platform/AccountData/{userId}");
+            HttpResponseMessage response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonString = await response.Content.ReadAsStringAsync();
+                User res = JsonConvert.DeserializeObject<User>(jsonString);
+
+                return View(res);
+            }
+            return BadRequest();
+        }
+        [HttpPost]
+        [Route("Account")]
+        public async Task<IActionResult> Account(User user)
+        {
+            var client = clientFactory.CreateClient();
+
+            var json = new StringContent(
+               System.Text.Json.JsonSerializer.Serialize(user),
+               Encoding.UTF8,
+               Application.Json);
+
+            using (var response = await client.PostAsync("https://localhost:7285/Platform/ChangeData", json))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    ViewBag.Message = await response.Content.ReadAsStringAsync();
+                    return View();
+                }
+            }
+
+            return BadRequest();
+        }
+        [HttpGet]
+        [Route("DeleteUser/{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var client = clientFactory.CreateClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, $"https://localhost:7285/Platform/DeleteUser/{id}");
+
+            HttpResponseMessage response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Logout", "Account");
+            }
+
+            return BadRequest();
         }
     }
 }

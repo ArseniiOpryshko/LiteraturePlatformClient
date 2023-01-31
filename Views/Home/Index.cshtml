@@ -5,7 +5,7 @@
             <div class="blog-home-featurebloginfo">
               <div class="rate">
                 <label for=""></label>
-                <span>@ViewBag.Top1.Rating</span>
+                <span>@Math.Round(ViewBag.Top1.Rating, 1)</span>
               </div>
               <div class="blog-home-featblogdetails">
                 <div class="blog-home-bloginfotop">
@@ -58,7 +58,7 @@
                 <a style="text-decoration: none;" asp-action="Details" asp-route-id="@item.CompositionId" asp-controller="Home">
                     <div class="blog-home-frame7639">
                         <div class="outimg">
-                            @Html.Raw("<img alt='Line29221' class='blog-home-rectangle478' src=\"data:image/jpeg;base64,"
+                            @Html.Raw("<img alt='Line29221' class='imagesmid' src=\"data:image/jpeg;base64,"
                         + Convert.ToBase64String(@item.Image) + "\" />")
                         </div>
                         <div class="blog-home-frame7645">
@@ -84,7 +84,7 @@
                                         {
                                             <span>Posted just now</span>
                                         }
-                                        else if (DateTime.Now.Subtract(item.Date).TotalMinutes < 15){
+                                        else if (DateTime.Now.Subtract(item.Date).TotalMinutes < 60){
                                             <span>Posted @DateTime.Now.Subtract(item.Date).ToString(@"mm") minutes ago</span>
                                         }
                                         else
