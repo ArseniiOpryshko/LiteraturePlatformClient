@@ -1279,6 +1279,7 @@ body, html{
 }
 .menu li:hover{
     color: #5533FF;
+    background: #F5F4FB;
 }
 .active{
     background: #F5F4FB;

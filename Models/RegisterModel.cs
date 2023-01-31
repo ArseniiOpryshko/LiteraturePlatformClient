@@ -11,7 +11,7 @@ namespace LiteraturePlatformClient.Models
         [MaxLength(30, ErrorMessage = "Max Login length should be 30 symbols")]
         public string Login { get; set; }
 
-        [RegularExpression(@"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$", ErrorMessage = "Email is not valid ")]
+        [RegularExpression(@"^[a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$", ErrorMessage = "Email is not valid ")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 

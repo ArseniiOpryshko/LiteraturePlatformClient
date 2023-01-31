@@ -20,14 +20,17 @@
                         <input type="text" name="Password" required asp-for="@Model.Password">
                     </div>
                     <input class="mbtn" type="submit" value="Save changes">
-                    <span style="color: lawngreen">
-                        @(ViewBag.Message != null ? ViewBag.Message : "")
+                    <span style="color: green">
+                        @(ViewBag.MessageGood != null ? ViewBag.MessageGood : "")
+                    </span>
+                    <span style="color: red">
+                        @(ViewBag.MessageBad != null ? ViewBag.MessageBad : "")
                     </span>
                 </form>
             </div>
         </div>
         <div class="myhr"></div>
 
-        <a asp-action="DeleteUser" asp-route-id="@Model.UserId" asp-controller="Home"><div class="deletebtn">Delete account</div></a>
+        @*<a class="non-a" asp-action="DeleteUser" asp-route-id="@Model.UserId" asp-controller="Home"><div class="deletebtn">Delete account</div></a>*@
     </div>
 </div>

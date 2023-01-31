@@ -309,10 +309,11 @@ namespace LiteraturePlatformClient.Controllers
         [Route("Account")]
         public async Task<IActionResult> Account()
         {
-            if (User.Claims.FirstOrDefault(x => x.Type.ToString() == "Login") != null)
+            if (TempData["Message"]!=null)
             {
-                ViewBag.Login = User.Claims.FirstOrDefault(x => x.Type.ToString() == "Login").Value;
+                ViewBag.MessageBad = TempData["Message"].ToString();
             }
+            ViewBag.Login = User.Claims.FirstOrDefault(x => x.Type.ToString() == "Login").Value;           
 
             int userId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type.ToString() == "Id").Value);
 
@@ -343,27 +344,28 @@ namespace LiteraturePlatformClient.Controllers
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    ViewBag.Message = await response.Content.ReadAsStringAsync();
-                    return View();
+                    ViewBag.MessageGood = await response.Content.ReadAsStringAsync();
+                    ViewBag.Login = User.Claims.FirstOrDefault(x => x.Type.ToString() == "Login").Value;
+                    return View(user);
                 }
+                TempData["Message"] = await response.Content.ReadAsStringAsync();
             }
-
-            return BadRequest();
+            return RedirectToAction("Account", "Home");
         }
-        [HttpGet]
-        [Route("DeleteUser/{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
-        {
-            var client = clientFactory.CreateClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, $"https://localhost:7285/Platform/DeleteUser/{id}");
+        //[HttpGet]
+        //[Route("DeleteUser/{id}")]
+        //public async Task<IActionResult> DeleteUser(int id)
+        //{
+        //    var client = clientFactory.CreateClient();
+        //    var request = new HttpRequestMessage(HttpMethod.Get, $"https://localhost:7285/Platform/DeleteUser/{id}");
 
-            HttpResponseMessage response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Logout", "Account");
-            }
+        //    HttpResponseMessage response = await client.SendAsync(request);
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        return RedirectToAction("Logout", "Account");
+        //    }
 
-            return BadRequest();
-        }
+        //    return BadRequest();
+        //}
     }
 }
