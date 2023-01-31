@@ -257,6 +257,45 @@ namespace LiteraturePlatformClient.Controllers
             }
             return BadRequest();
         }
+
+
+        [HttpPost]
+        [Route("SearchBy")]
+        public async Task<IActionResult> SearchBy(string select, string text)
+        {
+            var client = clientFactory.CreateClient();
+            switch (select)
+            {
+                case "author":                   
+                    var request1 = new HttpRequestMessage(HttpMethod.Get, $"https://localhost:7285/Platform/SearchByAutor/{text}");
+                    HttpResponseMessage response1 = await client.SendAsync(request1);
+                    if (response1.IsSuccessStatusCode)
+                    {
+                        await initPage();
+                        string jsonString = await response1.Content.ReadAsStringAsync();
+                        ViewBag.All = JsonConvert.DeserializeObject<IEnumerable<Composition>>(jsonString).ToList<Composition>();
+                        return View("Index");
+                    }
+                    break;
+
+                case "title":
+                    var request2 = new HttpRequestMessage(HttpMethod.Get, $"https://localhost:7285/Platform/SearchByTitle/{text}");
+                    HttpResponseMessage response2 = await client.SendAsync(request2);
+                    if (response2.IsSuccessStatusCode)
+                    {
+                        await initPage();
+                        string jsonString = await response2.Content.ReadAsStringAsync();
+                        ViewBag.All = JsonConvert.DeserializeObject<IEnumerable<Composition>>(jsonString).ToList<Composition>();
+                        return View("Index");
+                    }
+                    break;
+            }
+
+            return BadRequest();
+        }
+
+
+
         [HttpGet]
         [Route("GetTop50Comments")]
         public async Task<IActionResult> GetTop50Comments()

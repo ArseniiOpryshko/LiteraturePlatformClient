@@ -105,6 +105,19 @@
                 <span class="blog-home-text40">
                   <span>Published works</span>
                 </span>
+
+                <span class="blog-home-text42">
+                    <form asp-action="SearchBy" asp-controller="Home" method="post">
+                        <select name="select" class="selector">
+                            <option value="author">Author</option>
+                            <option value="title">Title</option>
+                        </select>
+                        <input name="text" class="searchText" type="text">
+                        <input class="searchText" type="submit" value="Search">
+                    </form>
+                  
+                </span>
+
                 <div class="blog-home-blogcategories">
                     <a asp-action="Index" asp-controller="Home" class="non-a">
                       <div class="blog-home-frame7650">
